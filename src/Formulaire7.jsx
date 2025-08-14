@@ -24,4 +24,4 @@ const Formulaire7 = () => {
     );
 };
 
-export default Formulaire7;
+export default Formulaire7; 

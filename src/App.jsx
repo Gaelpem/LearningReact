@@ -10,6 +10,7 @@ import Formulaire6 from './Formulaire6';
 import Formulaire7 from './Formulaire7';
 import ErrorDialog from './ErrorDialog';
 import Exercice from './Exercice';
+import Formulaire8 from './formulaire8';
 
 
 
@@ -58,6 +59,7 @@ function handleClose(){
       {showErreur && <ErrorDialog onClose={handleClose}/>}
       </form>
      <Exercice/>
+     <Formulaire8/>
       </div>
     
   );

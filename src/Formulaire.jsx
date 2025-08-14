@@ -67,7 +67,6 @@ const Formulaire = () => {
         value={enterInput.emailEnter}
         onChange={handleEmail}
       />
-
       <label htmlFor="">Your password</label>
 
       {/* Input mot de passe contrôlé avec la valeur du state */}
