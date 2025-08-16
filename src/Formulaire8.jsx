@@ -1,66 +1,83 @@
 import React, { useState } from 'react';
 
 const Formulaire8 = () => {
-  //creation d'un stocke formulaire pour controler les champs comme email et password``
+  // 🔹 État pour stocker le message d'erreur (string ou false si pas d'erreur)
+  const [error, setError] = useState(false); // false = aucune erreur affichée
 
-  const [error, setError] = useState(false)// On met false par defaut 
+  // 🔹 État pour stocker les valeurs du formulaire (inputs contrôlés)
+  const [formulaire, setFormulaire] = useState({
+    email: '',     // ⚠ devrait être '' par défaut au lieu de false
+    password: ''   // ⚠ idem, mettre '' pour éviter des bugs
+  });
 
-  const [formulaire,  setFormulaire] = useState({
-         email : false, 
-         password :false
-  })
-    
-  function handleEmail(e){
-     setFormulaire(prev =>({
-         ...prev, 
-          email : e.target.value
-     }))
-     if(error)setError(''); 
+  // 🔹 Fonction déclenchée quand on tape dans l'input email
+  function handleEmail(e) {
+    setFormulaire(prev => ({
+      ...prev, // On copie les autres valeurs (spread operator)
+      email: e.target.value // On remplace seulement l'email
+    }));
+
+    // 🔹 Si une erreur est affichée, on la supprime dès que l'utilisateur modifie
+    if (error) setError('');
   }
 
-  function handlePassword(e){
-    setFormulaire(prev =>({
-        ...prev, 
-        password : e.target.value 
-    }))
-    if(error)setError(''); 
-  }
-  
-  function handleFormulaire(e){
-     e.preventDefault() 
-      
-     const emails = formulaire.email.trim()
-     const mp = formulaire.password.trim()
+  // 🔹 Fonction déclenchée quand on tape dans l'input mot de passe
+  function handlePassword(e) {
+    setFormulaire(prev => ({
+      ...prev, // On garde l'email tel qu'il est
+      password: e.target.value // On modifie seulement le password
+    }));
 
-     if(!emails.includes("@")){
-        setError("L'email doit contenir @")
-        return; 
-     }
-
-
-     if((!mp) || (!emails)){
-      setError("Vous devez remplir tous les champs")
-      return ; 
-     }
-
+    // 🔹 On efface l'erreur si elle est affichée
+    if (error) setError('');
   }
 
-    return (
-       
-          <form onSubmit={handleFormulaire}>
-            <label htmlFor="">Email : </label>
+  // 🔹 Fonction déclenchée à l'envoi du formulaire
+  function handleFormulaire(e) {
+    e.preventDefault(); // Empêche le rechargement de la page
 
-            <input type="text" 
-            onChange={handleEmail}/>
+    // 🔹 On enlève les espaces au début/fin
+    const emails = formulaire.email.trim();
+    const mp = formulaire.password.trim();
 
-           <label htmlFor="">Password : </label>
-            <input type="text" 
-            onChange={handlePassword}/> 
-            {error && <p style={{ color : "red"}}>{error}</p>}
+    // 🔹 Vérification du format email
+    if (!emails.includes("@")) {
+      setError("L'email doit contenir @");
+      return; // On arrête la fonction ici
+    }
 
-            <button>Envoyer</button>
-            </form>
-    );
+    // 🔹 Vérification si un champ est vide
+    if (!mp || !emails) {
+      setError("Vous devez remplir tous les champs");
+      return; // On arrête la fonction ici
+    }
+
+    // ✅ Si tout est bon, ici tu pourrais envoyer les données
+  }
+
+  return (
+    <form onSubmit={handleFormulaire}>
+      {/* Champ email */}
+      <label htmlFor="">Email : </label>
+      <input
+        type="text"
+        onChange={handleEmail} // 🔹 Déclenché à chaque frappe
+      />
+
+      {/* Champ mot de passe */}
+      <label htmlFor="">Password : </label>
+      <input
+        type="text" // ⚠ devrait être "password" pour masquer le texte
+        onChange={handlePassword}
+      />
+
+      {/* Message d'erreur affiché seulement si error est non vide */}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      {/* Bouton de soumission */}
+      <button>Envoyer</button>
+    </form>
+  );
 };
 
 export default Formulaire8;

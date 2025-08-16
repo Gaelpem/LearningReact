@@ -11,12 +11,35 @@ import Formulaire7 from './Formulaire7';
 import ErrorDialog from './ErrorDialog';
 import Exercice from './Exercice';
 import Formulaire8 from './formulaire8';
+import Exercice2 from './Exercice2';
+import Calculatrice from './Calculatrice';
 
 
 
 const App = () => {
 
   const [isDisabled, setDisabled] = useState(true)
+
+
+
+  function handleA(){
+    setNumber(prev => ({
+       ...prev, 
+       a : e.target.value
+    }))
+  }
+
+
+  function handleB(){
+    setNumber(prev => ({
+       ...prev, 
+       b : e.target.value
+    }))
+  }
+   
+
+
+
 
    // Lors de la soumission, on empêche le rechargement de la page et on affiche le message d'erreur.
    
@@ -60,6 +83,10 @@ function handleClose(){
       </form>
      <Exercice/>
      <Formulaire8/>
+     <Exercice2/>
+     
+     <Calculatrice/>
+  
       </div>
     
   );
